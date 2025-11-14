@@ -1,0 +1,19 @@
+syntax = "proto3";
+package weather
+
+message WeatherRequest {
+  string city = 1;
+}
+
+message WeatherResponse {
+  string city = 1;
+  double temperature_c = 2;
+  string description = 3;
+  int32 humidity = 4;
+  double wind_speed_ms = 5;
+  string error = 6; // non-empty if server handled an error
+}
+
+service WheaterService {
+    rpc GetWeather (WeatherRequest) returns (WeatherResponse) {}
+}
