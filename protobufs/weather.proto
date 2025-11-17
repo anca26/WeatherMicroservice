@@ -14,6 +14,6 @@ message WeatherResponse {
   string error = 6; // non-empty if server handled an error
 }
 
-service WheaterService {
+service WeatherService {
     rpc GetWeather (WeatherRequest) returns (WeatherResponse) {}
 }
