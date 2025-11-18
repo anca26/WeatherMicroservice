@@ -8,27 +8,15 @@ import requests
 
 from generated import weather_pb2, weather_pb2_grpc  
 from server.repository import WeatherRepository
+from server.interceptors import ApiKeyInterceptor
 
 load_dotenv()
 GRPC_HOST = os.getenv("GRPC_HOST")
 GRPC_PORT = int(os.getenv("GRPC_PORT"))
 OWM_API_KEY = os.getenv("OWM_API_KEY")
-GRPC_API_KEY = os.getenv("GRPC_API_KEY")
 OWM_URL = "http://api.openweathermap.org/data/2.5/weather"
 
 repo = WeatherRepository()
-
-
-# gRPC Interceptor for API key authentication
-class ApiKeyInterceptor(grpc.ServerInterceptor):
-    def intercept_service(self, continuation, handler_call_details):
-        md = dict(handler_call_details.invocation_metadata or [])
-        if md.get("x-api-key") != GRPC_API_KEY:
-            def deny(request, context):
-                context.abort(grpc.StatusCode.UNAUTHENTICATED, "Invalid API key")
-            return grpc.unary_unary_rpc_method_handler(deny)
-        return continuation(handler_call_details)
-
 
 # WeatherService implementation 
 class WeatherService(
@@ -96,5 +84,8 @@ def serve():
     server.wait_for_termination()
     
 if __name__ == "__main__":
-    serve()
-
+    
+    try:
+        serve()
+    except KeyboardInterrupt:
+        print("[Shutdown] Server stopped by user")
