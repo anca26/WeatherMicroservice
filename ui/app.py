@@ -1,6 +1,5 @@
 import os
 from datetime import datetime, timezone, timedelta
-from urllib.parse import urlencode
 
 from dotenv import load_dotenv
 from flask import Flask, render_template, request, redirect, url_for
@@ -95,7 +94,7 @@ def index():
     for doc in documents:
         try:
             ts = doc.get("timestamp")
-            labels.append(str(ts))
+            labels.append(ts.strftime('%m-%d %H:%M'))
             temperatures.append(doc.get("temperature_c"))
         except Exception as e:
             print(f"[Error] Unexpected error while processing document: {e}")
