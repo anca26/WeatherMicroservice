@@ -2,7 +2,6 @@ from pymongo import MongoClient, ASCENDING, errors
 from datetime import datetime, timezone
 import os
 from dotenv import load_dotenv
-from pathlib import Path
 
 load_dotenv()
 
@@ -51,4 +50,14 @@ class WeatherRepository:
             print(f"[Error] Unexpected error while saving: {e}")
         
 
-    
+    def get_recent_weather_data(self, city, limit=10):
+        print(f"[Info] Retrieving recent weather data for city: {city}...")
+        try:
+            result = self.col.find({"city": city}).sort("timestamp",-1).limit(limit)
+            return list(result)
+        except errors.OperationFailure as e:
+            print(f"[Error] Failed to retrieve data: {e}")
+            return []
+        except Exception as e:
+            print(f"[Error] Unexpected error while retrieving: {e}")
+            return []

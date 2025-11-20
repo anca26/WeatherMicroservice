@@ -1,0 +1,120 @@
+/* Weather form layout for symmetry */
+.weather-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+    align-items: center;
+}
+
+.weather-form .form-row {
+    display: flex;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.weather-form .form-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: center;
+    margin-top: 0.5rem;
+}
+
+body {
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: linear-gradient(135deg, #DDC3C3 0%, #A376A2 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    background: #fff;
+    border-radius: 18px;
+    box-shadow: 0 4px 24px rgba(107, 63, 105, 0.10);
+    padding: 2.5rem 2.5rem 2rem 2.5rem;
+    max-width: 500px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+h1 {
+    color: #6B3F69;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+form {
+    display: flex;
+    flex-direction: row;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    align-items: center;
+}
+
+form label {
+    color: #8D5F8C;
+    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    font-size: 1rem;
+}
+
+input[type="text"],
+select {
+    margin-top: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #A376A2;
+    border-radius: 6px;
+    background: #F8F4F8;
+    color: #6B3F69;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+input[type="text"]:focus,
+select:focus {
+    border: 1.5px solid #6B3F69;
+}
+
+button {
+    background: #A376A2;
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(141, 95, 140, 0.10);
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: #6B3F69;
+}
+
+#chart-container {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 900px;
+    height: 400px;
+    background: #F8F4F8;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(163, 118, 162, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

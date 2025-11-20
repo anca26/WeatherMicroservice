@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weather Microservice</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>Weather in {{ city }}</h1>
+
+    <form method="get" action="/" class="weather-form">
+      <div class="form-row">
+        <label>
+          City
+          <input type="text" name="city" value="{{ city }}" />
+        </label>
+        <label>
+          Range
+          <select name="range">
+            <option value="1d" {{ 'selected' if (selected or '1d') == '1d' else '' }}>Last day</option>
+            <option value="3d" {{ 'selected' if selected == '3d' else '' }}>Last 3 days</option>
+            <option value="5d" {{ 'selected' if selected == '5d' else '' }}>Last 5 days</option>
+            <option value="7d" {{ 'selected' if selected == '7d' else '' }}>Last 7 days</option>
+          </select>
+        </label>
+      </div>
+      <div class="form-row form-buttons">
+        <button type="submit" formaction="/">Load history</button>
+        <button type="submit" formaction="/fetch" formmethod="post">Fetch current weather</button>
+      </div>
+    </form>
+
+    <div id="chart-container">
+      <canvas id="chart" width="900" height="400"></canvas>
+    </div>
+  </div>
+
+  <script>
+    const labels = {{ labels|tojson }};
+    const temps  = {{ temps|tojson }};
+
+    if (labels.length) {
+      const ctx = document.getElementById('chart').getContext('2d');
+      new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Temperature (°C)',
+            data: temps,
+            borderColor: '#6B3F69',
+            borderWidth: 2,
+            pointRadius: 2,
+            tension: 0.25
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { ticks: { maxTicksLimit: 12, autoSkip: true } },
+            y: { title: { display: true, text: '°C' } }
+          },
+          plugins: { legend: { display: false } }
+        }
+      });
+    }
+  </script>
+</body>
+</html>
